@@ -158,6 +158,10 @@ func (s *Server) Addr() net.Addr {
 	return s.socket.LocalAddr()
 }
 
+func (s *Server) Id() int160.T {
+	return s.id
+}
+
 func NewDefaultServerConfig() *ServerConfig {
 	return &ServerConfig{
 		NoSecurity:    true,
@@ -1447,7 +1451,7 @@ func (s *Server) TableMaintainer() {
 		select {
 		case <-s.closed.LockedChan(&s.mu):
 			return
-		case <-time.After(time.Minute):
+		case <-time.After(time.Second * 10):
 		}
 	}
 }
